@@ -1,7 +1,7 @@
 <template>
     <header class="bg-green-400  w-full flex flex-col items-center p-2 rounded-b-lg">
         <div class="m-2 p-2 flex items-center justify-center">
-            <h1 class="text-5xl font-semibold skew-x-6 -skew-y-1 ">Todo List</h1>
+            <h1 class="text-5xl font-semibold skew-x-6  text-green-950">Todo List</h1>
         </div>
 
         <form class="m-2 p-2 space-x-4 flex items-center justify-center" @submit.prevent="addOrUpdate">
@@ -12,25 +12,21 @@
                 <input class="rounded-sm pl-1" id="descriptionTask" name="descriptionTask" type="text"
                     v-model="newTask.description">
             </label>
-            <button v-if="prop.editingTask"
-                class="border-2 px-3 py-1 rounded-md bg-emerald-600 text-white font-semibold hover:bg-emerald-900 transition-all duration-300"
+            <button class="border-2 px-3 py-1 rounded-md bg-emerald-600 text-white font-semibold  hover:shadow-white hover:shadow-sm
+                                                     hover:bg-emerald-900 transition-all duration-300 hover:scale-105 "
                 type="submit">
-                Update
+                {{ prop.editingTask ? 'Update' : 'Create' }}
             </button>
-            <button v-else
-                class="border-2 px-3 py-1 rounded-md bg-emerald-600 text-white font-semibold hover:bg-emerald-900 transition-all duration-300"
-                type="submit">
-                Create
-            </button>
+
         </form>
         <div class="flex gap-2">
-            <button
-                class="border-2 px-3 py-1 rounded-md bg-emerald-600 text-white font-semibold hover:bg-emerald-900 transition-all duration-300"
+            <button :disabled="prop.editingTask !== null" class="border-2 px-3 py-1 rounded-md bg-emerald-600 text-white font-semibold  hover:shadow-white hover:shadow-sm
+                                                     hover:bg-emerald-900 transition-all duration-300 hover:scale-105 "
                 @click="onClearTasks">
                 Clear All
             </button>
-            <button
-                class="border-2 px-3 py-1 rounded-md bg-emerald-600 text-white font-semibold hover.bg-emerald-900 transition-all duration-300"
+            <button :disabled="prop.editingTask !== null" class="border-2 px-3 py-1 rounded-md bg-emerald-600 text-white font-semibold  hover:shadow-white hover:shadow-sm
+                                                     hover:bg-emerald-800 hover:scale-105 transition-all duration-300"
                 @click="onClearCompletedTasks">
                 Clear Task Completed
             </button>
@@ -60,7 +56,7 @@ const newTask = reactive({
 });
 
 watch(() => prop.editingTask, (newVal) => {
-    if (newVal) { 
+    if (newVal) {
         newTask.id = newVal.id;
         newTask.name = newVal.name;
         newTask.description = newVal.description;
